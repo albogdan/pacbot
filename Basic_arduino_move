@@ -1,0 +1,68 @@
+int forward = 9;    // forward pin
+int reverse = 12;    // reverse pin
+int left = 11;       // left pin
+int right = 10;       // right pin
+int sensorpin = 0;                 
+int fval = 0;
+int rval = 0;
+int lval = 0; 
+
+void setup()   {                
+
+  pinMode(forward, OUTPUT);
+  pinMode(reverse, OUTPUT);
+  pinMode(left, OUTPUT);
+  pinMode(right, OUTPUT);
+  Serial.begin(9600);
+}
+
+void go_forward()
+{
+  digitalWrite(forward,HIGH);   
+  digitalWrite(reverse,LOW);    
+}
+
+void go_reverse()
+{
+  digitalWrite(reverse,HIGH);    
+  digitalWrite(forward,LOW);    
+}
+
+void stop_car()
+{
+  digitalWrite(reverse,LOW);     
+  digitalWrite(forward,LOW);   
+  digitalWrite(left,LOW);
+  digitalWrite(right,LOW);
+}
+
+void go_left()
+{
+  digitalWrite(left,HIGH);    
+  digitalWrite(right,LOW);     
+}
+
+void go_right()
+{
+  digitalWrite(right,HIGH);    
+  digitalWrite(left,LOW);      
+}
+
+void loop() 
+{
+  fval = analogRead(sensorpin);       
+  Serial.println(fval);            
+  delay(200);                    
+
+   
+if(fval > 100) {
+   if (rval>100){go_left()}
+   else if (lval>100){go_right()}
+   else {go_right()}
+  delay(200);
+} else {
+   go_forward();
+  delay(200);
+}
+
+}
