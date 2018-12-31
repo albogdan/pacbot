@@ -29,14 +29,9 @@ class Board():
                 [1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 9],\
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 9],\
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 9]]
-        self.visited=[]
-        self.temp=[]
-        for i in range(21):
-            for i in range(20):
-                self.temp+=[0]
-            self.visited.append(self.temp)
+	self.visited=[[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]]*21
         self.indexDict={2: (9, 8), 5: (9, 9), 6: (9, 10), 7: (7, 9)}
-        self.score=0
+        
 
     def index_2d(self, v):
         for i, x in enumerate(self.grid):
@@ -47,22 +42,14 @@ class Board():
     def updatePos(self,keyList=[],indexList=[]):#,SNAKEindex,GHOSTindex,GHOST2index,GHOST3index,GHOST4index):
         for i in range(len(indexList)):
             self.indexDict[keyList[i]]=indexList[i]
-        return 1
+	    self.
+        return self.indexDict
 
-    def updateVisited(self,path=[]):#,SNAKEindex,GHOSTindex,GHOST2index,GHOST3index,GHOST4index):
-        for i in range(len(path)):
-            self.visited[path[i][0]][path[i][1]]+=1
-            if self.visited[path[i][0]][path[i][1]]==1:
-                self.score+=1
-        return self.visited
-
-    def isPellet(self,pos):
-        return self.visited[pos[0]][pos[1]]>0
-
-    def update(self,keyList=[],indexList=[],path=[],score):
-        a=updateVisited(self,path)
-        b=updatePos(self,keyList,indexList)
-        return 1
+    def updatePellets(self,path=[]):#,SNAKEindex,GHOSTindex,GHOST2index,GHOST3index,GHOST4index):
+        for i in range(len(indexList)):
+            self.indexDict[keyList[i]]=indexList[i]
+	    self.
+        return self.indexDict
         
 board=Board()
-print (board.updateVisited([(2,10),(3,10),(4,10)]))
+print (board.update())
