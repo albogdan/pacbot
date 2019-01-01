@@ -63,7 +63,7 @@ class PyManMain:
                                         self.snake.MoveKeyDown(event.key)
 
                 """Update the sprites"""        
-                self.snake_sprites.update(self.block_sprites)
+                self.snake_sprites.update(self.block_sprites, self.gwall_sprites)
                 self.ghost_sprites.update(self.block_sprites)#,self.fdir)     
                 self.ghost2_sprites.update(self.block_sprites)#,self.fdir) 
                 self.ghost3_sprites.update(self.block_sprites)#,self.fdir) 

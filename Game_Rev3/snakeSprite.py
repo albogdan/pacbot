@@ -45,7 +45,7 @@ class Snake(basicSprite.Sprite):
                 self.nextdir=4
 
             
-    def update(self,block_group):
+    def update(self,block_group,gwall):
         """Called when the Snake sprit should update itself"""
         self.xMove=self.xdir[self.nextdir]
         self.yMove=self.ydir[self.nextdir]
@@ -53,14 +53,14 @@ class Snake(basicSprite.Sprite):
         self.rect.move_ip(self.xMove,self.yMove)
 
         """IF we hit a block, don't move - reverse the movement"""
-        if pygame.sprite.spritecollide(self, block_group, False):
+        if pygame.sprite.spritecollide(self, block_group, False) or pygame.sprite.spritecollide(self, gwall, False):
             self.rect.move_ip(-self.xMove,-self.yMove)
             """IF we can't move in the new direction... continue in old direction"""
             self.xMove=self.xdir[self.direction]
             self.yMove=self.ydir[self.direction]
             self.rect.move_ip(self.xMove,self.yMove)
             
-            if pygame.sprite.spritecollide(self, block_group, False):
+            if pygame.sprite.spritecollide(self, block_group, False) or pygame.sprite.spritecollide(self, gwall, False):
                 self.rect.move_ip(-self.xMove,-self.yMove)
                 self.yMove=0
                 self.xMove=0
@@ -68,8 +68,6 @@ class Snake(basicSprite.Sprite):
                 self.nextdir=0
         else:
                 self.direction=0
-
-
 
 class Ghost(basicSprite.Sprite):
     """This is the ghost that will move around the screen"""
