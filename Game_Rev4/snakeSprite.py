@@ -27,24 +27,25 @@ class Snake(basicSprite.Sprite):
         self.ydir=[0,0,0,-self.dist,self.dist]
 
 
-    def MoveKeyDown(self, key):
-        """This function sets the xMove or yMove variables that will
-        then move the snake when update() function is called.  The
-        xMove and yMove values will be returned to normal when this 
-        keys MoveKeyUp function is called."""
+    def move(self):
+        #This function sets the xMove or yMove variables that will
+        #then move the snake when update() function is called.  The
+        #xMove and yMove values will be returned to normal when this 
+        #keys MoveKeyUp function is called.
 
         self.direction=self.nextdir
 
-        if (key == K_RIGHT):
+        """if (key == K_RIGHT):
                 self.nextdir=2
         elif (key == K_LEFT):
                 self.nextdir=1
         elif (key == K_UP):
                 self.nextdir=3
         elif (key == K_DOWN):
-                self.nextdir=4
+                self.nextdir=4"""
+        if self.nextdir == 0: #random motion for demonstration
+           self.nextdir = randint(1, 4)
 
-            
     def update(self,block_group,gwall):
         """Called when the Snake sprit should update itself"""
         self.xMove=self.xdir[self.nextdir]

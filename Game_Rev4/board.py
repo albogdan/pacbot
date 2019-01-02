@@ -32,10 +32,11 @@ class Board():
         self.visited=[]
         self.temp=[]
         for i in range(21):
-            for i in range(20):
+            for j in range(20):
                 self.temp+=[0]
             self.visited.append(self.temp)
-        self.indexDict={2: (9, 8), 5: (9, 9), 6: (9, 10), 7: (7, 9)}
+            self.temp = [] #added by Daniel, visited board now has correct dimensions
+        self.indexDict={2: (15, 9), 4: (9, 8), 5: (9, 9), 6: (9, 10), 7: (7, 9)} #do we need GHOST (4) as well? I added it (Daniel)
         self.score=0
 
     def index_2d(self, v):
@@ -59,10 +60,16 @@ class Board():
     def isPellet(self,pos):
         return self.visited[pos[0]][pos[1]]>0
 
-    def update(self,keyList=[],indexList=[],path=[],score):
+    def update(self,score,keyList=[],indexList=[],path=[]):
         a=updateVisited(self,path)
         b=updatePos(self,keyList,indexList)
         return 1
         
 board=Board()
-print (board.updateVisited([(2,10),(3,10),(4,10)]))
+#print (board.updateVisited(path=[[2,10],[3,10],[4,10]]))
+board.updateVisited(path=[[2,10],[3,10],[4,10]])
+for i in range(21):
+    for j in range(20):
+        print(board.visited[i][j], " ", end="")
+    print("")
+

@@ -55,12 +55,13 @@ class PyManMain:
                 #if self.snake.rect[0]-self.ghost3.rect[0]!=0 and self.snake.rect[1]-self.ghost3.rect[1]!=0:
                 #	self.fdir= ((self.snake.rect[0]-self.ghost3.rect[0])/(abs(self.snake.rect[0]-self.ghost3.rect[0])),(self.snake.rect[1]-self.ghost3.rect[1])/(abs(self.snake.rect[1]-self.ghost3.rect[1])))#,self.ghost.rect,self.ghost2.rect,self.ghost3.rect,self.ghost4.rect\
 
-                for event in pygame.event.get():
+                """for event in pygame.event.get():
                         if event.type == pygame.QUIT: 
                                 sys.exit()
                         elif event.type == KEYDOWN: #or event.type == KEYUP
                                 if ((event.key == K_RIGHT) or (event.key == K_LEFT) or (event.key == K_UP) or (event.key == K_DOWN)):
-                                        self.snake.MoveKeyDown(event.key)
+                                        self.snake.MoveKeyDown(event.key)"""
+                self.snake.move()
 
                 """Update the sprites"""        
                 self.snake_sprites.update(self.block_sprites, self.gwall_sprites)
