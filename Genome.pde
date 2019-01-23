@@ -53,9 +53,9 @@ class Genome {
   //adds the conenctions going out of a node to that node so that it can acess the next node during feeding forward
   void connectNodes() {
 
-    /*for (int i = 0; i< nodes.size(); i++) {//clear the connections
+    for (int i = 0; i< nodes.size(); i++) {//clear the connections
       nodes.get(i).outputConnections.clear();
-    }*/ //changed
+    }
 
     for (int i = 0; i < genes.size(); i++) {//for each connectionGene 
       genes.get(i).fromNode.outputConnections.add(genes.get(i));//add it to node
