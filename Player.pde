@@ -63,8 +63,8 @@ class Player {
 
       //so how this works 
       //get the 'danger' of going in that direciton by finding the nearest ghost in that direction and inversing the distance to it 
-      //i could also do a bunch of directions (12 - 18) directions lto find the nice nigger
-      //lets do the bunch of directions thing then if that is still too complicated then fuck you
+      //i could also do a bunch of directions (12 - 18) directions lto find pacman
+      //lets do the bunch of directions thing then if that is still too complicated then ok
 
       //also this is assuming that this is called every time pacman is at a critical point 
 
