@@ -5,6 +5,7 @@ import basicSprite
 from pygame.locals import *
 from helpers import *
 from snakeSprite import Snake,Ghost
+from board import Board
 #from image import *	
 
 # TODO
@@ -34,6 +35,8 @@ class PyManMain:
         # Setup the variables
         self.collisiontol=5;
         self.collisions=0;
+
+        self.board = Board()
 
     def MainLoop(self):
         """This is the Main Loop of the Game"""
