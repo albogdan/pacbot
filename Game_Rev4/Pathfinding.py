@@ -21,7 +21,7 @@ def generatePath(board, row, column, display=False):
     y = 0
     if len(path) > 1: (x, y) = path[1]
     elif len(path) == 1: (x, y) = path[0]
-    else: return 0 #we are trapped!
+    else: return 1 #we are trapped!
     
     if x < current.x:
         return board.LEFT

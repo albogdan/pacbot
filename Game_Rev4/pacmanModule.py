@@ -1,4 +1,5 @@
 import os, sys
+import math
 import pygame
 import level001
 import basicSprite
@@ -6,6 +7,7 @@ from pygame.locals import *
 from helpers import *
 from snakeSprite import Snake,Ghost
 from board import Board
+from Pathfinding import generatePath
 #from image import *	
 
 # TODO
@@ -38,6 +40,13 @@ class PyManMain:
 
         self.board = Board()
 
+    def pixelsToBoard(self, x, y):
+        xMap = self.width / self.board.COLS 
+        yMap = self.height / self.board.ROWS
+
+        return (math.ceil(x/xMap), math.ceil(y/yMap))
+
+        
     def MainLoop(self):
         """This is the Main Loop of the Game"""
         self.fdir=(1,1)
@@ -53,7 +62,10 @@ class PyManMain:
             drawn once"""
             self.block_sprites.draw(self.background)
             self.gwall_sprites.draw(self.background)
-            
+
+            xTarget = 1
+            yTarget = 1
+            foundTarget = False
             while 1:
                 #if self.snake.rect[0]-self.ghost3.rect[0]!=0 and self.snake.rect[1]-self.ghost3.rect[1]!=0:
                 #	self.fdir= ((self.snake.rect[0]-self.ghost3.rect[0])/(abs(self.snake.rect[0]-self.ghost3.rect[0])),(self.snake.rect[1]-self.ghost3.rect[1])/(abs(self.snake.rect[1]-self.ghost3.rect[1])))#,self.ghost.rect,self.ghost2.rect,self.ghost3.rect,self.ghost4.rect\
@@ -65,18 +77,45 @@ class PyManMain:
                                 if ((event.key == K_RIGHT) or (event.key == K_LEFT) or (event.key == K_UP) or (event.key == K_DOWN)):
                                         self.snake.MoveKeyDown(event.key)"""
                 self.snake.move()
-
+                
                 """Update the sprites"""        
                 self.snake_sprites.update(self.block_sprites, self.gwall_sprites)
                 self.ghost_sprites.update(self.block_sprites)#,self.fdir)     
                 self.ghost2_sprites.update(self.block_sprites)#,self.fdir) 
                 self.ghost3_sprites.update(self.block_sprites)#,self.fdir) 
-                self.ghost4_sprites.update(self.block_sprites)#,self.fdir) 
+                self.ghost4_sprites.update(self.block_sprites)#,self.fdir)
+
+                #get coordinates of objects
+                (snakeY, snakeX) = self.pixelsToBoard(self.snake.rect[1], self.snake.rect[0])
+                (ghostY, ghostX) = self.pixelsToBoard(self.ghost.rect[1], self.ghost.rect[0])
+                (ghost2Y, ghost2X) = self.pixelsToBoard(self.ghost2.rect[1], self.ghost2.rect[0])
+                (ghost3Y, ghost3X) = self.pixelsToBoard(self.ghost3.rect[1], self.ghost3.rect[0])
+                (ghost4Y, ghost4X) = self.pixelsToBoard(self.ghost4.rect[1], self.ghost4.rect[0])
+
+                #update the board
+                self.board.updatePos([self.board.SNAKE, self.board.GHOST, self.board.GHOST2, self.board.GHOST3, self.board.GHOST4], [(snakeY, snakeX), (ghostY, ghostX), (ghost2Y, ghost2X), (ghost3Y, ghost3X), (ghost4Y, ghost4X)])
+                self.board.updateVisited((snakeY, snakeX))
                 
+                for i in range(self.board.ROWS):
+                    for j in range(self.board.COLS):
+                        if self.board.grid[i][j] > 0 and not foundTarget and self.board.isPellet((i, j)):
+                            xTarget = j
+                            yTarget = i
+                            foundTarget = True
+                if self.snake.rect[0]%24 == 0 and self.snake.rect[1]%24 == 0: #so pacman is centered in a tile before attempting to change directions
+                    #use pathfinding to direct pacman
+                    command = generatePath(self.board, yTarget, xTarget)
+                    if command != None: self.snake.nextdir = command
+                print(snakeY, snakeX, self.snake.nextdir, "     ", self.snake.rect[1], self.snake.rect[0]) #debugging
+                if not self.board.isPellet((yTarget, xTarget)): #find a new target if the target is reached
+                    foundTarget = False;
+
+                    
                 if pygame.sprite.collide_rect(self.ghost,self.snake) or pygame.sprite.collide_rect(self.ghost2,self.snake) or pygame.sprite.collide_rect(self.ghost3,self.snake) or pygame.sprite.collide_rect(self.ghost4,self.snake):
                     self.collisions+=1
                     if self.collisions==self.collisiontol:
                             print ("gameover")
+                            self.board.reset()
                             break
                 else:
                     self.collisions=0
