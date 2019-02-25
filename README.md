@@ -1,2 +1,1 @@
-# pacbot
-Pacman Playing Robot
+This is a revision of the simulator
